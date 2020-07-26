@@ -494,6 +494,10 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             coinTake.Play();
             speed += 0.01f;
+            audioManager.soundsSource.clip = audioManager.sounds[3];
+            audioManager.soundsSource.loop = false;
+            audioManager.soundsSource.Play();
+
         }
         if (other.CompareTag("EnergyBottle"))
         {
@@ -544,7 +548,7 @@ public class PlayerController : MonoBehaviour
         {
             SetNewSounds(2, false);
         }
-        if(controller.isGrounded && !isDead)
+        if(controller.isGrounded && !isDead && !coinTake.isPlaying)
         {
             SetNewSounds(0, true);
         }
@@ -557,7 +561,6 @@ public class PlayerController : MonoBehaviour
             audioManager.soundsSource.Stop();
             audioManager.soundsSource.clip = audioManager.sounds[soundID];
             audioManager.soundsSource.loop = looping;
-            Debug.Log(audioManager.soundsSource.clip);
             audioManager.soundsSource.Play();
         }
     }
