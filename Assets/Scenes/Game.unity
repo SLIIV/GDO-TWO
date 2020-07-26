@@ -23571,21 +23571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1da7873031ae44eae1f02a453ceec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audios:
-  - name: 
-    clip: {fileID: 8300000, guid: e58984de5cf4e3a40862c0f828b635b1, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: 4596ec8c2f81d8b4180c08bfa04cbc76, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: db8c394cfd8641849ad2326b47ccac0f, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: 94f49c0c9aab5884e80d87f2ef68b875, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: c48b7fc5a5e22b0429fa7b281179db11, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: 02683092e4b2f464cac2b51cab2ec865, type: 3}
-  - name: 
-    clip: {fileID: 8300000, guid: 6ea8f7454c093de4dbf3cd7c9fd2e2f0, type: 3}
+  audios: []
   currentSong: 0
   pauseImage: {fileID: 21300080, guid: 0a15f2ef17680f34eba054a12eb1a223, type: 3}
   playImage: {fileID: 21300078, guid: 0a15f2ef17680f34eba054a12eb1a223, type: 3}

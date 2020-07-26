@@ -41,7 +41,10 @@ public class UIManager : MonoBehaviour
     {
         coinsText.text = coins.getSetCoins.ToString();
         recordText.text = coins.setPoints.ToString("0.00");
-        songName.text = audioManager.audios[audioManager.currentSong].name;
+        if (audioManager.audios.Count > 0)
+        {
+            songName.text = audioManager.audios[audioManager.currentSong].name;
+        }
 
         if(isMenuOpened)
         {
