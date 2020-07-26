@@ -168,6 +168,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject deathWindow;
 
+    public AudioManager audioManager;
+
+    AudioManager.Sounds sounds;
 
 
     void Start()
@@ -194,6 +197,8 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         coins.setPoints = 0;
 
+       
+
     }
 
     private void OnDestroy()
@@ -211,6 +216,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!isDead)
             coins.setPoints += speed * Time.deltaTime;
+        PlaySounds();
     }
 
     void FixedUpdate()
@@ -524,6 +530,36 @@ public class PlayerController : MonoBehaviour
         jumpHight = jumpHight / 2;
         gravityForce /= 1.5f;
         isJumpBonus = false;
+    }
+
+    private void PlaySounds()
+    {
+        
+        if(isJump)
+        {
+            SetNewSounds(1, false);
+            
+        }
+        if (isDead)
+        {
+            SetNewSounds(2, false);
+        }
+        if(controller.isGrounded && !isDead)
+        {
+            SetNewSounds(0, true);
+        }
+    }
+
+    private void SetNewSounds(int soundID, bool looping)
+    {   
+        if (audioManager.soundsSource.clip != audioManager.sounds[soundID])
+        {
+            audioManager.soundsSource.Stop();
+            audioManager.soundsSource.clip = audioManager.sounds[soundID];
+            audioManager.soundsSource.loop = looping;
+            Debug.Log(audioManager.soundsSource.clip);
+            audioManager.soundsSource.Play();
+        }
     }
 
 }

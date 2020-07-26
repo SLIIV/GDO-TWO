@@ -17,6 +17,21 @@ public class AudioManager : MonoBehaviour
     public Button curImage;
     private bool isPaused = false;
 
+    #region sounds
+    public AudioSource soundsSource;
+    public AudioClip[] sounds;
+
+    public enum Sounds
+    {
+        Run = 0,
+        Jump = 1,
+        JumpComplete = 2,
+        Moving = 3,
+        Death = 4,
+        TakeCoin = 5
+    }
+    #endregion
+
     private void Awake()
     {
         for(int i = 0; i < audios.Count; i++)

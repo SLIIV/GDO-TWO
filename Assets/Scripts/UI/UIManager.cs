@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     public PlayerController player;
     public Text songName;
     public AudioManager audioManager;
+
+    
     public void RestartTheGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
