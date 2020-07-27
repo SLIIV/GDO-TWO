@@ -216,7 +216,8 @@ public class PlayerController : MonoBehaviour
     {
         if(!isDead)
             coins.setPoints += speed * Time.deltaTime;
-        PlaySounds();
+
+            PlaySounds();
     }
 
     void FixedUpdate()
@@ -539,7 +540,7 @@ public class PlayerController : MonoBehaviour
     private void PlaySounds()
     {
         
-        if(isJump)
+        if (isJump)
         {
             SetNewSounds(1, false);
             
@@ -552,6 +553,7 @@ public class PlayerController : MonoBehaviour
         {
             SetNewSounds(0, true);
         }
+        
     }
 
     private void SetNewSounds(int soundID, bool looping)

@@ -919,6 +919,7 @@ MonoBehaviour:
   coinsText: {fileID: 1473665380}
   recordText: {fileID: 1833131981}
   playerMenu: {fileID: 454495100}
+  isMenuOpened: 0
   player: {fileID: 309906075}
   songName: {fileID: 2133157337}
   audioManager: {fileID: 2043760492}
@@ -7038,7 +7039,8 @@ AudioSource:
   m_GameObject: {fileID: 1073783978}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6713291161418968494, guid: 2c36e80add4108b4b96c6ce2e1665256,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 0f048ef380f1a9341b1daf11a8eff2d5, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.42
@@ -23704,6 +23706,8 @@ MonoBehaviour:
   pauseImage: {fileID: 21300080, guid: 0a15f2ef17680f34eba054a12eb1a223, type: 3}
   playImage: {fileID: 21300078, guid: 0a15f2ef17680f34eba054a12eb1a223, type: 3}
   curImage: {fileID: 1905154981}
+  isPaused: 0
+  UI: {fileID: 418468130}
   soundsSource: {fileID: 1073783980}
   sounds:
   - {fileID: 8300000, guid: 0f048ef380f1a9341b1daf11a8eff2d5, type: 3}
@@ -23734,7 +23738,8 @@ AudioSource:
   m_GameObject: {fileID: 2043760491}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6403097264729251439, guid: 2c36e80add4108b4b96c6ce2e1665256,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.08

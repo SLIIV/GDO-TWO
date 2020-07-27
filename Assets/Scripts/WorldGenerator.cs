@@ -106,7 +106,7 @@ public class WorldGenerator : MonoBehaviour
         if(lastPlatform.GetComponent<PlatformController>().movingObjectsSpawner.Length > 0)
         {
             for(int i = 0; i < lastPlatform.GetComponent<PlatformController>().movingObjectsSpawner.Length; i++)
-            if(rand <= 15)
+            if(rand <= 90)
             {
                     lastPlatform.GetComponent<PlatformController>().movingObjectsSpawner[index].SetActive(true);
             }

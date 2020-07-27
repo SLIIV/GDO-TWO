@@ -15,7 +15,8 @@ public class AudioManager : MonoBehaviour
     public Sprite pauseImage;
     public Sprite playImage;
     public Button curImage;
-    private bool isPaused = false;
+    public bool isPaused = false;
+    public UIManager UI;
 
     #region sounds
     public AudioSource soundsSource;
@@ -125,8 +126,21 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
+
+    private void Update()
+    {
+        if(Time.timeScale == 0)
+        {
+            soundsSource.enabled = false;
+        }
+        else
+        {
+            soundsSource.enabled = true;
+        }
+    }
     private void FixedUpdate()
     {
+        
         if(!musicSource.isPlaying && !isPaused && audios.Count > 0)
         {
             NextSong();

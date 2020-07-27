@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public Text recordText;
     private Coins coins = Coins.SetInstance();
     public GameObject playerMenu;
-    private bool isMenuOpened;
+    public bool isMenuOpened;
     public PlayerController player;
     public Text songName;
     public AudioManager audioManager;

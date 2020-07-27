@@ -10,9 +10,11 @@ public class JetsAttack : MonoBehaviour
     public GameObject explosionObject;
     private bool isAttack = false;
     private int attackCount = 0;
+    private AudioSource audioSource;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform.position;
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     // Update is called once per frame
@@ -35,6 +37,8 @@ public class JetsAttack : MonoBehaviour
         for (int i = 0; i < particleSystems.Length; i++)
         {
             particleSystems[i].Play();
+            audioSource.enabled = true;
+            audioSource.Play();
         }
         StartCoroutine(Reload(0.2f));
 
@@ -45,8 +49,8 @@ public class JetsAttack : MonoBehaviour
             isAttack = true;
             attackCount = 0;
             explosionObject.SetActive(false);
-            //StopAllCoroutines();
-            //StartCoroutine(Reload(1f));
+            audioSource.Stop();
+            audioSource.enabled = false;
         }
     }
     IEnumerator Reload(float delay)
