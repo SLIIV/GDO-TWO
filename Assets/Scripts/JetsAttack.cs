@@ -4,23 +4,51 @@ using UnityEngine;
 
 public class JetsAttack : MonoBehaviour
 {
+
+    /// <summary>
+    /// Скорость
+    /// </summary>
     public float speed;
+
+    /// <summary>
+    /// Текущее местоположение игрока
+    /// </summary>
     private Vector3 player;
+    
+    /// <summary>
+    /// Системы частисц со взрывом
+    /// </summary>
     public ParticleSystem[] particleSystems;
+
+    /// <summary>
+    /// Объект взрыва
+    /// </summary>
     public GameObject explosionObject;
+
+    /// <summary>
+    /// Атакует истребитель ли сейчас
+    /// </summary>
     private bool isAttack = false;
+
+    /// <summary>
+    /// Количество атак
+    /// </summary>
     private int attackCount = 0;
+
+    /// <summary>
+    /// Источник звука истребителя
+    /// </summary>
     private AudioSource audioSource;
     void Start()
     {
+        //Получаем необходимые компоненты
         player = GameObject.FindGameObjectWithTag("Player").transform.position;
         audioSource = GetComponentInChildren<AudioSource>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-
+        //Двигаем в сторону игрока
         transform.position += Vector3.back * speed * Time.deltaTime;
         if(transform.position.z - player.z <= 12 && !isAttack)
         {
@@ -31,8 +59,13 @@ public class JetsAttack : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    /// <summary>
+    /// Атака истребителя
+    /// </summary>
     void JetAttack()
     {
+        //Проигрываем все системы частиц
         
         for (int i = 0; i < particleSystems.Length; i++)
         {
@@ -53,6 +86,12 @@ public class JetsAttack : MonoBehaviour
             audioSource.enabled = false;
         }
     }
+
+    /// <summary>
+    /// Перезарядка
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <returns></returns>
     IEnumerator Reload(float delay)
     {
         yield return new WaitForSeconds(delay / 1.5f);
@@ -63,11 +102,6 @@ public class JetsAttack : MonoBehaviour
 
 
 
-    }
-    IEnumerator AttackDelay()
-    {
-        yield return new WaitForSeconds(1f);
-        isAttack = false;
     }
 
 }

@@ -149,28 +149,50 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private float climbingHight;
 
+
+    /// <summary>
+    /// Экземпляр класса с монетками
+    /// </summary>
     public Coins coins = Coins.SetInstance();
 
-
+    /// <summary>
+    /// Все трейлы
+    /// </summary>
     public TrailRenderer[] trails;
 
+    #region Particles
     public ParticleSystem landing;
     public ParticleSystem coinTake;
     public ParticleSystem deathParts;
     public ParticleSystem energyBonus;
     public ParticleSystem jumpBonus;
+    #endregion
 
+    /// <summary>
+    /// Проверка на бонус для прыжка
+    /// </summary>
     public bool isJumpBonus = false;
 
+    /// <summary>
+    /// Проверяет, начали ли мы приземлятся
+    /// </summary>
     bool isLandingStarted = false;
 
+    /// <summary>
+    /// Скрипт управляющий миром
+    /// </summary>
     public WorldController worldController;
 
+    /// <summary>
+    /// Окно смерти
+    /// </summary>
     public GameObject deathWindow;
 
+    /// <summary>
+    /// Скрипт аудио
+    /// </summary>
     public AudioManager audioManager;
 
-    AudioManager.Sounds sounds;
 
 
     void Start()
@@ -203,6 +225,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        //Сохраняем монетки и рекорд игрока в реестр
         if (coins.setPoints > PlayerPrefs.GetFloat("Points", 0))
         {
             PlayerPrefs.SetFloat("Points", coins.setPoints);
@@ -214,6 +237,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+       //Устанавливаем очки игрока и играем звуки
         if(!isDead)
             coins.setPoints += speed * Time.deltaTime;
 
@@ -301,6 +325,7 @@ public class PlayerController : MonoBehaviour
                 gravityForce = 15f;
             }
         }
+        //Если мы не лезим по стене, но прыгаем
         if (controller.isGrounded && !isWallClimbing)
         {
             playerAnimator.SetBool("isGround", true);
@@ -322,7 +347,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isInMoving && xDir != 0)
         {
-            
+         //Включаем анимацию в зависимости от направления движения   
             curDir = xDir;
             curDistance = distance;
             isInMoving = true;
@@ -340,11 +365,13 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+        //Передвигаем персонажа в определённом направлении
         if(isInMoving)
         {
             StartCoroutine(Move(curDir));
         }
 
+        //Обрабатываем кувырок
         if(!isRoll && yDir != 0 && controller.isGrounded && !isLandingProcess)
         {
             isRoll = true;
@@ -458,6 +485,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Обработка столкновений
         if(other.CompareTag("Danger") && !isInMoving && !isWallClimbing)
         {
             isDead = true;
@@ -513,6 +541,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Включает окно смерти
+    /// </summary>
+    /// <param name="delay">Задержка в секундах</param>
+    /// <returns></returns>
     private IEnumerator ActivateDeathWindow(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -520,12 +553,22 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
+
+    /// <summary>
+    /// Увелечение скорости
+    /// </summary>
+    /// <returns></returns>
     private IEnumerable SpeedBuf()
     {
         speed = speed * 1.4f;
         yield return new WaitForSeconds(10);
         speed = speed / 1.4f;
     }    
+
+    /// <summary>
+    /// Баф к прыжку
+    /// </summary>
+    /// <returns></returns>
     private IEnumerable JumpBuf()
     {
         isJumpBonus = true;
@@ -537,6 +580,10 @@ public class PlayerController : MonoBehaviour
         isJumpBonus = false;
     }
 
+
+    /// <summary>
+    /// Проигрывает звуки игры
+    /// </summary>
     private void PlaySounds()
     {
         
@@ -556,6 +603,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Устанавливает новый звук на источник
+    /// </summary>
+    /// <param name="soundID">Айди звука в массиве</param>
+    /// <param name="looping">Зацикливание звука</param>
     private void SetNewSounds(int soundID, bool looping)
     {   
         if (audioManager.soundsSource.clip != audioManager.sounds[soundID])

@@ -4,31 +4,67 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
+
+    /// <summary>
+    /// Массив с свободными платформами
+    /// </summary>
     public GameObject[] freePlatforms;
+
+    /// <summary>
+    /// Массив с препятствиями
+    /// </summary>
     public GameObject[] obstaclesPlatforms;
-    public GameObject[] startPlatforms;
+
+    
+    //public GameObject[] startPlatforms;
+
+    /// <summary>
+    /// Движущиеся платформы
+    /// </summary>
     public GameObject[] movingObjects;
+
+    /// <summary>
+    /// Фоны
+    /// </summary>
     public GameObject[] backgrounds;
+
+    /// <summary>
+    /// Родительский объект платформ
+    /// </summary>
     public Transform platformContainer;
+
+    /// <summary>
+    /// Родительский объект всех фонов
+    /// </summary>
     public Transform backGroundContainer;
+
+    /// <summary>
+    /// Родительский объект всех фонов справа
+    /// </summary>
     public Transform rightBackGroundContainer;
    
-
+    /// <summary>
+    /// Последняя сгенерированная платформа
+    /// </summary>
     private Transform lastPlatform = null;
+
+    /// <summary>
+    /// Последний сгенерированный фон
+    /// </summary>
     private Transform lastBackground = null;
+
+    /// <summary>
+    /// Последний сгенерированный фон справа
+    /// </summary>
     private Transform lastRightBackground = null;
     void Start()
     {
-        
         Init();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Инициализация платформ и фонов
+    /// </summary>
     private void Init()
     {
         CreateFreePlatform();
@@ -46,7 +82,9 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Создание платформы
+    /// </summary>
     public void CreatePlatform()
     {
         int rand = Random.Range(0, 10);
@@ -60,16 +98,23 @@ public class WorldGenerator : MonoBehaviour
         CreateMovingObjects();
 
     }
+
+    /// <summary>
+    /// Создание свободной платформы
+    /// </summary>
     private void CreateFreePlatform()
     {
-        Vector3 pos = (lastPlatform == null) ?
+        Vector3 pos = (lastPlatform == null) ? // получаем позиию для спавна новой платформы
             platformContainer.position :
             lastPlatform.GetComponent<PlatformController>().endPos.position;
         int index = Random.Range(0, freePlatforms.Length);
-        GameObject res = Instantiate(freePlatforms[index], pos, Quaternion.identity, platformContainer);
+        GameObject res = Instantiate(freePlatforms[index], pos, Quaternion.identity, platformContainer); //Создаём новую платформу
         lastPlatform = res.transform;
     }
 
+    /// <summary>
+    /// Создание платформы с препятствиями
+    /// </summary>
     private void CreateObstaclesPlatform()
     {
         Vector3 pos = (lastPlatform == null) ?
@@ -80,9 +125,14 @@ public class WorldGenerator : MonoBehaviour
         lastPlatform = res.transform;
 
     }
+
+    /// <summary>
+    /// Создание монеток
+    /// </summary>
     private void CreateCoins()
     {
-        for (int i = 0; i < lastPlatform.GetComponent<PlatformController>().coinsSpawners.Length; i++)
+        for (int i = 0; i < lastPlatform.GetComponent<PlatformController>().coinsSpawners.Length; i++) //Проходимся по массиву монеток на
+            //платформе и включаем их
         {
             int index = Random.Range(0, lastPlatform.GetComponent<PlatformController>().coinsSpawners.Length);
             int rand = Random.Range(0, 11);
@@ -98,6 +148,9 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Создаёт движущиеся объекты
+    /// </summary>
     private void CreateMovingObjects()
     {
         int index = Random.Range(0, lastPlatform.GetComponent<PlatformController>().movingObjectsSpawner.Length);
@@ -113,6 +166,11 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Устанавливает рандомное значение исходя из количества препятствий
+    /// </summary>
+    /// <param name="obstaclesCount">Количество препядствий на платформе</param>
+    /// <returns></returns>
     private int SetRandRange(int obstaclesCount)
     {
         int rand = 0;
@@ -130,6 +188,9 @@ public class WorldGenerator : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Включает препядствия на платформе
+    /// </summary>
     private void CreateObstacles()
     {
         int obstaclesCount = lastPlatform.GetComponent<PlatformController>().obstacles.Length;
@@ -153,6 +214,10 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Создаёт рандомный фон с каждой стороны
+    /// </summary>
     public void CreateBackGround()
     {
         if (backgrounds.Length > 0)

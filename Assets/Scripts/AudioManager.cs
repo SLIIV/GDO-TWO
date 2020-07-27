@@ -8,33 +8,64 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
+
+    /// <summary>
+    /// База данных всей музыки
+    /// </summary>
     public List<AudioBD> audios = new List<AudioBD>();
+
+    /// <summary>
+    /// Источник музыки
+    /// </summary>
     private AudioSource musicSource;
+
+    /// <summary>
+    /// Текущая композиция
+    /// </summary>
     public int currentSong = 0;
+    
+    /// <summary>
+    /// Текущий клип
+    /// </summary>
     private AudioClip currentClip;
+
+    /// <summary>
+    /// Изображение кнопки паузы
+    /// </summary>
     public Sprite pauseImage;
+    
+    /// <summary>
+    /// Изображение кнопки проигрывания
+    /// </summary>
     public Sprite playImage;
+
+    /// <summary>
+    /// Текущее изображение
+    /// </summary>
     public Button curImage;
+
+    /// <summary>
+    /// Поставлена ли на паузу песня
+    /// </summary>
     public bool isPaused = false;
-    public UIManager UI;
 
     #region sounds
-    public AudioSource soundsSource;
-    public AudioClip[] sounds;
 
-    public enum Sounds
-    {
-        Run = 0,
-        Jump = 1,
-        JumpComplete = 2,
-        Moving = 3,
-        Death = 4,
-        TakeCoin = 5
-    }
+    /// <summary>
+    /// Источник звуков
+    /// </summary>
+    public AudioSource soundsSource;
+
+    /// <summary>
+    /// Массив со звуками
+    /// </summary>
+    public AudioClip[] sounds;
     #endregion
 
     private void Awake()
     {
+
+        //устанавливаем названия песен, если они отсутствуею
         for(int i = 0; i < audios.Count; i++)
         {
             if(audios[i].name == "")
@@ -42,6 +73,8 @@ public class AudioManager : MonoBehaviour
                 SetTheName(i, audios[i].clip.name);
             }
         }
+
+        //Получаем компонент с источником звука
         musicSource = GetComponent<AudioSource>();
         RandomizeList();
        
@@ -51,13 +84,19 @@ public class AudioManager : MonoBehaviour
            {
                 System.IO.Directory.CreateDirectory(playerDocsFolder + "\\GDO-TWO\\UserSongs"); //создание папки
            }
-        DirectoryInfo musicDir = new DirectoryInfo(playerDocsFolder + "/GDO-TWO/UserSongs");
+        DirectoryInfo musicDir = new DirectoryInfo(playerDocsFolder + "/GDO-TWO/UserSongs"); // получение информации о файлах внутрти папки
         FileInfo[] userMusic = musicDir.GetFiles("*.ogg", SearchOption.TopDirectoryOnly);
 
-        StartCoroutine(LoadTracks(userMusic, playerDocsFolder));
+        StartCoroutine(LoadTracks(userMusic, playerDocsFolder)); //загрузка треков
         
     }
 
+    /// <summary>
+    /// Загружает треки
+    /// </summary>
+    /// <param name="files">Массив с информацией о файлах</param>
+    /// <param name="path">Путь к папке с музыкой</param>
+    /// <returns></returns>
     private IEnumerator LoadTracks(FileInfo[] files, string path)
     {
         for (int i = 0; i < files.Length; i++)
@@ -73,11 +112,11 @@ public class AudioManager : MonoBehaviour
 
         }
     }
-    private void Start()
-    {
-        
-    }
 
+
+    /// <summary>
+    /// Случайно заполняет музыкальный плейлист
+    /// </summary>
     private void RandomizeList()
     {
         for (int i = audios.Count - 1; i >= 0; i--)
@@ -90,6 +129,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Переключение на следующую песню
+    /// </summary>
     public void NextSong()
     {
         if(currentSong + 1 < audios.Count)
@@ -104,6 +147,10 @@ public class AudioManager : MonoBehaviour
                 Play(currentSong);
         }
     }
+
+    /// <summary>
+    /// Предыдущая песня
+    /// </summary>
     public void PrevSong()
     {
         if(currentSong > 0)
@@ -119,6 +166,11 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Проигрывание песни через её ID
+    /// </summary>
+    /// <param name="songId"></param>
     private void Play(int songId)
     {
         currentClip = audios[songId].clip;
@@ -126,9 +178,10 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-
+    
     private void Update()
     {
+        //Выключаем звуки, если игра на паузе
         if(Time.timeScale == 0)
         {
             soundsSource.enabled = false;
@@ -140,19 +193,26 @@ public class AudioManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
+        //Если музыка закончилась, включаем следующую
         if(!musicSource.isPlaying && !isPaused && audios.Count > 0)
         {
             NextSong();
         }
     }
 
+    /// <summary>
+    /// Устанавливаем имя музыке
+    /// </summary>
+    /// <param name="songId">Айди музыки</param>
+    /// <param name="name">Имя</param>
     private void SetTheName(int songId, string name)
     {
         audios[songId].name = name;
     }
     
-
+    /// <summary>
+    /// Ставит музыку на паузу
+    /// </summary>
     public void Pause()
     {
         
