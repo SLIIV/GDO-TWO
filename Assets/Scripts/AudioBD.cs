@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Класс аудиозаписей
+/// </summary>
 [System.Serializable]
 public class AudioBD
 {

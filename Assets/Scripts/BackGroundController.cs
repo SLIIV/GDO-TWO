@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class BackGroundController : MonoBehaviour
 {
+    /// <summary>
+    /// Конечная точка фона
+    /// </summary>
     public Transform endPos;
     void Start()
     {
         WorldController.instance.OnBackMovement += TryDelAndAddBackground;
     }
 
+    /// <summary>
+    /// Попытка удалить или добавить фон
+    /// </summary>
     public void TryDelAndAddBackground()
     {
         if(transform.position.z < WorldController.instance.minZ * 2)

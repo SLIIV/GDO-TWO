@@ -7,7 +7,14 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
 
+    /// <summary>
+    /// Аниматор камеры
+    /// </summary>
     public Animator cameraAnimator;
+
+    /// <summary>
+    /// Объект с главным меню
+    /// </summary>
     public GameObject mainMenu;
     public Text coins;
 
@@ -27,6 +34,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        //Получаем статистику игрока
         coins.text = PlayerPrefs.GetInt("Coins", 0).ToString();
         playerRecord.text = PlayerPrefs.GetFloat("Points", 0).ToString("0.00");
         Time.timeScale = 1;
@@ -39,35 +47,59 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+
+    /// <summary>
+    /// Перейти в окно рекордов
+    /// </summary>
     public void Records()
     {
         mainMenu.SetActive(false);
         recordsWindow.SetActive(true);
     }
 
+    /// <summary>
+    /// Переход в магазин
+    /// </summary>
     public void ToShop()
     {
         StopAllCoroutines();
         cameraAnimator.Play("ToShop");
         mainMenu.SetActive(false);
-        Debug.Log("It Work");
         StartCoroutine(OpenWindowAnimation(shopWindow, 1.25f));
     }
 
+    /// <summary>
+    /// Выход из игры
+    /// </summary>
     public void Exit()
     {
         Application.Quit();
     }
 
+    /// <summary>
+    /// Переход из магазина в меню
+    /// </summary>
     public void FromShopToMenu()
     {
         Cancel(shopWindow, mainMenu, true, "ToMenuFromShop", 1.25f);
     }
 
+    /// <summary>
+    /// Переход с рекордов в меню
+    /// </summary>
     public void FromRecordToMenu()
     {
         Cancel(recordsWindow, mainMenu, false, "", 0);
     }
+
+    /// <summary>
+    /// Отмена перехода
+    /// </summary>
+    /// <param name="objectToClose">Объект, который необходимо закрыть</param>
+    /// <param name="objectToOpen">Объект, который необходимо открыть</param>
+    /// <param name="isAnimeted">Анимированный ли переход</param>
+    /// <param name="animName">Имя анимации (если есть)</param>
+    /// <param name="delay">задержка между закрытием и появлением окна</param>
     public void Cancel(GameObject objectToClose, GameObject objectToOpen, bool isAnimeted, string animName, float delay)
     {
         if(isAnimeted)
@@ -84,6 +116,12 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Открытие окна с задержкой
+    /// </summary>
+    /// <param name="window">Объект с окном</param>
+    /// <param name="delay">Задержка</param>
+    /// <returns></returns>
     private IEnumerator OpenWindowAnimation(GameObject window, float delay = 0)
     {
         yield return new WaitForSeconds(delay);

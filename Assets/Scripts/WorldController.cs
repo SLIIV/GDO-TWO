@@ -63,14 +63,6 @@ public class WorldController : MonoBehaviour
         StartCoroutine(OnPlatformMovementCoroutine());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-        
-    }
-
 
     /// <summary>
     /// Двигает мир
